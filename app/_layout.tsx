@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 import './globals.css';
 
+
 export default function RootLayout() {
   const [fontsLoaded, error] = useFonts({
     "QuickSand-Bold": require("../assets/fonts/Quicksand-Bold.ttf"),
