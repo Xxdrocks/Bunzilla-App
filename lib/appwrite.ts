@@ -1,12 +1,19 @@
 import { CreateUserParams, SignInParams } from "@/type";
-import { Account, Avatars, Client, Databases, ID, Query } from "react-native-appwrite";
+import { Account, Avatars, Client, Databases, ID, Query, Storage } from "react-native-appwrite";
 
 export const appwriteConfig = {
     endpoint: process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!,
     Platform: "com.winata.bunzilla",
     projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!,
     databaseId: '687428e80023a5e70036',
-    userCollectionId: '6874294c0008b1e4fda5'
+    bucketId: '68b5605300019c610ad5',
+    userCollectionId: '6874294c0008b1e4fda5',
+    categoriesCollectionId : 'categories',
+    menuCollectionId : 'menu',
+    customizationsCollectionId : 'customizations',
+    menuCustomizationsCollectionId : 'menu_customizations',
+
+
 }
 
 export const client = new Client();
@@ -18,6 +25,7 @@ client
 
 export const account = new Account(client);
 export const databases = new Databases(client);
+export const storage = new Storage(client);
 const avatar = new Avatars(client);
 
 export const createUser = async ({ email, password, name }: CreateUserParams) => {
@@ -54,6 +62,7 @@ export const signIn = async ({ email, password }: SignInParams) => {
 
 export const getCurrentUser = async () => {
     try {
+
         const currentAccount = await account.get();
         if (!currentAccount) throw Error
         const currentUser = await databases.listDocuments(
