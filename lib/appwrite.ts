@@ -25,7 +25,7 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
         const newAccount = await account.create(
             ID.unique(), email, password, name)
         if (!newAccount) throw new Error;
-        SignIn({ email, password });
+        signIn({ email, password });
 
 
         const avatarUrl = avatar.getInitialsURL(name);
@@ -44,7 +44,7 @@ export const createUser = async ({ email, password, name }: CreateUserParams) =>
     }
 }
 
-export const SignIn = async ({ email, password }: SignInParams) => {
+export const signIn = async ({ email, password }: SignInParams) => {
     try {
         const session = await account.createEmailPasswordSession(email, password);
     } catch (e) {
@@ -60,7 +60,8 @@ export const getCurrentUser = async () => {
             appwriteConfig.databaseId,
             appwriteConfig.userCollectionId,
             [Query.equal('accountId', currentAccount.$id)]
-        )if(!currentUser) throw Error
+        )
+        if(!currentUser) throw Error
 
         return currentUser.documents[0]
         

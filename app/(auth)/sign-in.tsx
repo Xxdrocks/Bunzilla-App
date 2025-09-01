@@ -1,11 +1,11 @@
-import Signin from '@/app/(auth)/sign-in';
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
+import { signIn } from '@/lib/appwrite';
 
-const SignIn = (p0: { email: string; password: string; }) => {
+const SignIn = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [form, setForm] = useState({
@@ -21,7 +21,7 @@ const SignIn = (p0: { email: string; password: string; }) => {
     setIsSubmitting(true)
 
     try {
-      await Signin({ email, password });
+      signIn({ email, password });
       Alert.alert("Success", "Sign in successful");
       router.push("/");
     }catch(error: any) {
